@@ -25,7 +25,7 @@
     "when": "^3.4.2"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
+    "chai": "^2.3.0",
     "chai-as-promised": "^4.1.1",
     "getport": "^0.1.0",
     "istanbul": "^0.3.0",
