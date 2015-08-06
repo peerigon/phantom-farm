@@ -404,7 +404,7 @@ describe("Phantom", function () {
                 });
             });
 
-            it("should be save to call .dispose() multiple times", slow(function () {
+            it("should be safe to call .dispose() multiple times", slow(function () {
                 return when.all([
                     phantom.dispose(),
                     phantom.dispose(),
@@ -412,8 +412,10 @@ describe("Phantom", function () {
                 ]);
             }));
 
+            it("should be safe to call .dispose() after the process has died", slow(function () {
+                phantom.childProcess.kill('SIGTERM');
+                return phantom.dispose();
+            }));
         });
-
     });
-
 });

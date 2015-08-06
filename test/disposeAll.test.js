@@ -32,4 +32,29 @@ describe("disposeAll()", function () {
             });
     }));
 
+    it("should ignore EPIPE errors", slow(function () {
+        var exited = [];
+
+        return when.all([
+                phridge.spawn(),
+                phridge.spawn(),
+                phridge.spawn()
+            ])
+            .then(function (p) {
+                p[0].childProcess.kill('SIGINT');
+                return p;
+            })
+            .then(function (p) {
+                p[0].childProcess.on("exit", function () { exited.push(0); });
+                p[1].childProcess.on("exit", function () { exited.push(1); });
+                p[2].childProcess.on("exit", function () { exited.push(2); });
+
+                return phridge.disposeAll();
+            })
+            .then(function () {
+                exited.sort();
+                expect(exited).to.eql([0, 1, 2]);
+            });
+    }));
+
 });
