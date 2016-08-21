@@ -15,3 +15,7 @@ npm-debug.log
 node_modules
 coverage
 .idea
+/.vs/phridge/v14
+/typings
+/phridge.njsproj
+/phridge.sln

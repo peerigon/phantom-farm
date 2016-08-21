@@ -294,6 +294,28 @@ will terminate all processes.
 
 **I strongly recommend to call** `phridge.disposeAll()` **when the node process exits as this is the only way to ensure that all child processes terminate as well.** Since `disposeAll()` is async it is not safe to call it on `process.on("exit")`. It is better to call it on `SIGINT`, `SIGTERM` and within your regular exit flow.
 
+### Calling back from phantom to node
+
+If you wan't to call node function from the phantom enviroment, you can call the "nodeCallback" function within page.run context.
+The function at "onCallback" property of the page element are called with the data that sent as parameter for the function.
+
+```javascript
+var page = phantom.createPage();
+
+page.run(function (resolve, reject) {
+   nodeCallback({message: "Hello World!"});
+});
+```
+
+At node, you need to set the onCallback property
+```javascript
+var page = phantom.createPage();
+
+page.onCallback = function(data) {
+   console.log(data.message);
+};
+```
+
 <br />
 
 API
